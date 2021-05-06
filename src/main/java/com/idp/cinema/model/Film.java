@@ -1,6 +1,7 @@
 package com.idp.cinema.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -39,8 +40,8 @@ public class Film {
     @Column(name = "available_seats")
     private String availableSeats;
 
-    @ManyToOne
-    @JoinColumn(name="cinema_id", nullable=false)
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     private Cinema cinema;
 
 }

@@ -21,7 +21,6 @@ public class Cinema {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "film_id")
+    @OneToMany(mappedBy = "cinema",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Film> films = new ArrayList<>();
 }

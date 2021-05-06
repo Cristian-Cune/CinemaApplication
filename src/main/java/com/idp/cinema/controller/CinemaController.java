@@ -2,6 +2,7 @@ package com.idp.cinema.controller;
 
 import com.idp.cinema.model.Cinema;
 import com.idp.cinema.model.Film;
+import com.idp.cinema.model.Reservation;
 import com.idp.cinema.service.CinemaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +39,7 @@ public class CinemaController {
 
 
     @GetMapping(value = "/cinemas/{cinemaName}/films")
-    public ResponseEntity<List<Film>> getCinemas(@PathVariable String cinemaName) {
+    public ResponseEntity<List<Film>> getFilms(@PathVariable String cinemaName) {
         List<Film> films = cinemaService.getFilms(cinemaName);
         if (films == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -51,6 +52,27 @@ public class CinemaController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         try {
             Film saved = cinemaService.saveFilm(film, cinemaName);
+            return new ResponseEntity<>(saved.getId(), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+    }
+
+    @GetMapping(value = "/reservations")
+    public ResponseEntity<List<Reservation>> getReservations() {
+        List<Reservation> reservations = cinemaService.getReservations();
+        if (reservations == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(reservations, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/reservations")
+    public ResponseEntity<Long> addReservation(@RequestBody Reservation reservation) {
+        if (reservation.getCinemaName() == null || reservation.getFilmName() == null || reservation.getStartTime() == null ||
+            reservation.getReservedSeats() == null)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        try {
+            Reservation saved = cinemaService.saveReservation(reservation);
             return new ResponseEntity<>(saved.getId(), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
