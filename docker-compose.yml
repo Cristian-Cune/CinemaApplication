@@ -1,0 +1,45 @@
+version: '3.3'
+
+services:
+  mysql_db:
+    container_name: "mysql-cinema"
+    image: mysql:8.0
+    volumes:
+    - my_db_data:/var/lib/mysql
+    ports:
+    - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cinema
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    networks:
+      - network-api-db
+      - network-db-adminer
+  adminer_container:
+    image: adminer:4.7
+    environment:
+      ADMINER_DEFAULT_SERVER: mysql_db
+    ports:
+    - "8000:8080"
+    networks:
+      - network-db-adminer
+#  meteo_api:
+#    build: .
+#    ports:
+#    - "8080:8080"
+#    networks:
+#      - network-api-db
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:mysql://mysql_db:3306/meteo
+#      SPRING_DATASOURCE_USERNAME: user
+#      SPRING_DATASOURCE_PASSWORD: password
+#      SPRING_DATASOURCE_DRIVER-CLASS-NAME: com.mysql.cj.jdbc.Driver
+#    depends_on:
+#      - "mysql_db"
+#    restart: on-failure
+networks:
+  network-api-db:
+  network-db-adminer:
+volumes:
+  my_db_data: {}

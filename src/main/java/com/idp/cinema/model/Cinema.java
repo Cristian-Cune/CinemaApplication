@@ -4,12 +4,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
-@Table(name = "cinema")
+@Table( name = "cinema",uniqueConstraints={@UniqueConstraint(columnNames = {"name"})})
 public class Cinema {
 
     @Id
@@ -22,5 +23,5 @@ public class Cinema {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "film_id")
-    private List<Film> films;
+    private List<Film> films = new ArrayList<>();
 }
