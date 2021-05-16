@@ -1,5 +1,6 @@
 package com.idp.cinema.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,5 +23,6 @@ public class Cinema {
     private String name;
 
     @OneToMany(mappedBy = "cinema",cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Film> films = new ArrayList<>();
 }

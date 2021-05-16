@@ -76,7 +76,7 @@ public class CinemaService {
         StringBuilder updatedAvailableSeats = new StringBuilder();
         availableSeats.forEach(seat -> {
             if(!reservation.getReservedSeats().contains(seat))
-                updatedAvailableSeats.append(seat + ";");
+                updatedAvailableSeats.append(seat).append(";");
         });
         film.setAvailableSeats(updatedAvailableSeats.toString());
         filmRepository.save(film);
