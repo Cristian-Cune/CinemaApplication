@@ -1,11 +1,13 @@
 package com.idp.cinema.configuration;
 
+import com.idp.cinema.model.Role;
 import com.idp.cinema.model.User;
 import com.idp.cinema.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -21,12 +23,18 @@ import org.springframework.web.filter.CorsFilter;
 import javax.servlet.http.HttpServletResponse;
 
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(
+        securedEnabled = true,
+        jsr250Enabled = true,
+        prePostEnabled = true
+)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final UserRepository userRepository;
     private final JwtTokenFilter jwtTokenFilter;
 
     public SecurityConfiguration(UserRepository userRepository, JwtTokenFilter jwtTokenFilter) {
+        super();
         this.userRepository = userRepository;
         this.jwtTokenFilter = jwtTokenFilter;
     }

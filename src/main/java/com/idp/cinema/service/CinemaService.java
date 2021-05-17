@@ -7,10 +7,12 @@ import com.idp.cinema.repository.CinemaRepository;
 import com.idp.cinema.repository.FilmRepository;
 import com.idp.cinema.repository.ReservationRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CinemaService {
@@ -60,8 +62,8 @@ public class CinemaService {
         return savedFilm;
     }
 
-    public List<Reservation> getReservations() {
-        Iterable<Reservation> reservations = reservationRepository.findAll();
+    public List<Reservation> getReservations(String username) {
+        Iterable<Reservation> reservations = reservationRepository.findAllByUsername(username);
         List<Reservation> reservationList = new ArrayList<>();
         reservations.forEach(reservationList::add);
         return reservationList;
@@ -72,6 +74,10 @@ public class CinemaService {
                     reservation.getCinemaName(),
                     reservation.getStartTime());
         List<String> availableSeats = Arrays.asList(film.getAvailableSeats().split(";"));
+        List<String> wantedSeats = Arrays.asList(reservation.getReservedSeats().split(";"));
+
+        if (!availableSeats.containsAll(wantedSeats))
+            throw new IllegalArgumentException("Requested seats are not available!");
 
         StringBuilder updatedAvailableSeats = new StringBuilder();
         availableSeats.forEach(seat -> {
@@ -81,5 +87,42 @@ public class CinemaService {
         film.setAvailableSeats(updatedAvailableSeats.toString());
         filmRepository.save(film);
         return reservationRepository.save(reservation);
+    }
+
+    @Transactional
+    public void deleteReservation(Long id, String username) {
+        Optional<Reservation> optionalReservation = reservationRepository.findById(id);
+        if (!optionalReservation.isPresent())
+            throw new IllegalArgumentException("Wrong reservation selected");
+        Reservation reservation = optionalReservation.get();
+        if (!reservation.getUsername().equals(username))
+            throw new IllegalArgumentException("Wrong reservation selected");
+
+        returnReservationSeats(reservation);
+        reservationRepository.deleteByIdAndUsername(id, username);
+    }
+
+    private void returnReservationSeats(Reservation reservation) {
+        String reservedSeats = reservation.getReservedSeats();
+
+        Film film = filmRepository.findByNameAndCinema_NameAndStartTime(
+                reservation.getFilmName(),
+                reservation.getCinemaName(),
+                reservation.getStartTime()
+        );
+
+        List<String> seatList = Arrays.asList((film.getAvailableSeats() + reservedSeats).split(";"));
+        seatList.sort(String::compareTo);
+
+        StringBuilder updatedAvailableSeats = new StringBuilder();
+        seatList.forEach(seat -> updatedAvailableSeats.append(seat).append(";"));
+        film.setAvailableSeats(updatedAvailableSeats.toString());
+        filmRepository.save(film);
+    }
+
+    @Transactional
+    public void deleteCinema(Long id) {
+        reservationRepository.deleteAllByCinemaName(cinemaRepository.findById(id).get().getName());
+        cinemaRepository.deleteById(id);
     }
 }

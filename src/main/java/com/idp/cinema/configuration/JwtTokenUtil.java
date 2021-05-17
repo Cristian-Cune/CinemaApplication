@@ -4,9 +4,11 @@ import com.idp.cinema.model.User;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 
@@ -23,6 +25,11 @@ public class JwtTokenUtil {
                 .setSubject(format("%s,%s", user.getId(), user.getUsername()))
                 .setIssuer(jwtIssuer)
                 .setIssuedAt(new Date())
+                .claim("authorities",
+                        user.getAuthorities().stream()
+                                .map(GrantedAuthority::getAuthority)
+                                .collect(Collectors.toList()))
+
                 .setExpiration(new Date(System.currentTimeMillis() + 7 * 24 * 60 * 60 * 1000)) // 1 week
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
@@ -36,6 +43,7 @@ public class JwtTokenUtil {
 
         return claims.getSubject().split(",")[0];
     }
+
 
     public Date getExpirationDate(String token) {
         Claims claims = Jwts.parser()

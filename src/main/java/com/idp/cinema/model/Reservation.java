@@ -42,4 +42,7 @@ public class Reservation {
     @Column(name = "reserved_seats")
     private String reservedSeats;
 
+    @JsonProperty("username")
+    @Column(name = "username")
+    private String username;
 }
