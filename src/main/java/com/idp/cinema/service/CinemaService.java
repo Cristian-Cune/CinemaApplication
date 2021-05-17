@@ -125,4 +125,13 @@ public class CinemaService {
         reservationRepository.deleteAllByCinemaName(cinemaRepository.findById(id).get().getName());
         cinemaRepository.deleteById(id);
     }
+
+    @Transactional
+    public void deleteFilm(Long id, String cinemaName) {
+        Film film = filmRepository.findById(id).get();
+        if (!film.getCinema().getName().equals(cinemaName))
+            throw new IllegalArgumentException(String.format("Cinema %s has no film with id: %s", cinemaName, id.toString()));
+        reservationRepository.deleteAllByFilmName(film.getName());
+        filmRepository.deleteById(id);
+    }
 }

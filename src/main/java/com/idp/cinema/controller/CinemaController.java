@@ -70,6 +70,12 @@ public class CinemaController {
         }
     }
 
+    @PreAuthorize("hasAuthority('USER_ADMIN')")
+    @DeleteMapping(value = "/cinemas/{cinemaName}/films/{id}")
+    public void deleteFIlm(@PathVariable String cinemaName, @PathVariable Long id) {
+        cinemaService.deleteFilm(id, cinemaName);
+    }
+
     @GetMapping(value = "/reservations")
     public ResponseEntity<List<Reservation>> getReservations(@RequestHeader("Authorization") String jwtToken) {
         String username = getUsernameFromToken(jwtToken);

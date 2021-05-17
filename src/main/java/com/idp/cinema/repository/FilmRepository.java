@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface FilmRepository extends CrudRepository<Film, Long> {
     Film findByNameAndCinema_NameAndStartTime(String name, String Cinema, LocalDateTime startTime);
+    void deleteAllByStartTimeLessThan(LocalDateTime date);
 }
