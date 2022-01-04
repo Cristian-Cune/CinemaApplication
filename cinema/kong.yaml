@@ -1,0 +1,18 @@
+
+_format_version: "2.1"
+
+services:
+  - name: cinema-api
+    url: http://cinema-api/cinemas
+    routes:
+      - name: cinema-api-route
+        paths:
+          - /cinemas
+
+  - name: adminer_container
+    url: http://adminer_container:8000
+    routes:
+      - name: adminer
+        paths:
+          - /adminer
+

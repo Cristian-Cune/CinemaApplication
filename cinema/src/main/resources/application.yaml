@@ -1,0 +1,20 @@
+cinema:
+  client-queue: cinema-queue
+  admin-queue: cinema-admin-queue
+  exchange: cinema-exchange
+  routing-key: cinema-routing-key
+  admin-routing-key: cinema-admin-routing-key
+spring:
+  rabbitmq:
+    addresses: localhost:5674,localhost:5672
+    username: guest
+    password: guest
+    virtual-host: malima
+  datasource:
+    url: jdbc:mysql://localhost:3306/cinema_db?allowPublicKeyRetrieval=true&useSSL=false
+    username: root
+    password: root
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update

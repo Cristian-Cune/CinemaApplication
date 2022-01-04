@@ -1,0 +1,77 @@
+version: '3.3'
+
+services:
+  mysql_cinema:
+    container_name: "mysql_cinema"
+    image: mysql:8.0
+    volumes:
+      - my_db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cinema
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    deploy:
+      placement:
+        constraints:
+          - "node.role==manager"
+    networks:
+      - network-api-db
+      - network-db-adminer
+  adminer_container:
+    image: adminer:4.7
+    environment:
+      ADMINER_DEFAULT_SERVER: mysql_cinema
+    ports:
+      - "8000:8080"
+    networks:
+      - network-db-adminer
+      - internal
+  cinema_api:
+    image: andreicune/img_repo:cinema1.1
+    ports:
+      - "8080:8080"
+    networks:
+      - network-api-db
+      - internal
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql_cinema:3306/cinema
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_DATASOURCE_DRIVER-CLASS-NAME: com.mysql.cj.jdbc.Driver
+    deploy:
+      replicas: 2
+    depends_on:
+      - "mysql_cinema"
+    restart: on-failure
+  kong:
+    image: kong:latest
+    volumes:
+      - ./Kong:/usr/local/kong/declarative
+    environment:
+      KONG_DATABASE: 'off'
+      KONG_DECLARATIVE_CONFIG: /usr/local/kong/declarative/kong.yml
+      KONG_PROXY_ACCESS_LOG: /dev/stdout
+      KONG_ADMIN_ACCESS_LOG: /dev/stdout
+      KONG_PROXY_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_LISTEN: 0.0.0.0:8001, 0.0.0.0:8444 ssl
+    ports:
+      - 8001:8001
+      - 8444:8444
+    deploy:
+      placement:
+        constraints: [ node.role == manager ]
+    networks:
+      - internal
+networks:
+  network-api-db:
+  network-db-adminer:
+  internal:
+volumes:
+  my_db_data: {}
+
+
+
