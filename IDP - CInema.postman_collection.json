@@ -1,0 +1,912 @@
+{
+	"info": {
+		"_postman_id": "f4ee1ae3-64a7-4d4d-b99a-b0591aafb469",
+		"name": "IDP - CInema",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GET /movies should return expected data\", function() {",
+							"    // Arramge",
+							"    var expected = JSON.parse(pm.globals.get(\"EXPECTED_MOVIES\"));",
+							"    ",
+							"    // Act",
+							"    var actual = pm.response.json();",
+							"    pm.globals.set(\"MOVIES\", JSON.stringify(actual));",
+							"    ",
+							"    // Assert",
+							"    pm.response.to.have.status(200);",
+							"    pm.expect(actual.length).to.eql(expected.length);",
+							"    ",
+							"    _.forEach(actual, function(movie) {",
+							"        pm.expect(expected.indexOf(movie.nume)).to.not.eql(-1);",
+							"    });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"andrei@gmail.com\",\r\n    \"password\": \"andrei\",\r\n    \"rePassword\": \"andrei\",\r\n    \"fullName\": \"andrei andrei\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/register",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GET /movies should return expected data\", function() {",
+							"    // Arramge",
+							"    var expected = JSON.parse(pm.globals.get(\"EXPECTED_MOVIES\"));",
+							"    ",
+							"    // Act",
+							"    var actual = pm.response.json();",
+							"    pm.globals.set(\"MOVIES\", JSON.stringify(actual));",
+							"    ",
+							"    // Assert",
+							"    pm.response.to.have.status(200);",
+							"    pm.expect(actual.length).to.eql(expected.length);",
+							"    ",
+							"    _.forEach(actual, function(movie) {",
+							"        pm.expect(expected.indexOf(movie.nume)).to.not.eql(-1);",
+							"    });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzLGFuZHJlaUBnbWFpbC5jb20iLCJpc3MiOiJjb20uaWRwLmNpbmVtYSIsImlhdCI6MTYyMTc5MTA5MiwiYXV0aG9yaXRpZXMiOlsiVVNFUl9BRE1JTiIsIlVTRVJfQ0lORU1BIl0sImV4cCI6MTYyMjM5NTg5Mn0.9GPyzJJ8stGD4m6dc9svqDjukHXGSwYWJr8aak4Y-P6DwIxL-acMOFZgatULa8rsXjTg0A0zVQe8iSNFVGz9tQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"andrei@gmail.com\",\r\n    \"password\": \"andrei123\",\r\n    \"rePassword\": \"andrei123\",\r\n    \"fullName\": \"andrei cune\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/users/andrei@gmail.com",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"users",
+						"andrei@gmail.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GET /movies should return expected data\", function() {",
+							"    // Arramge",
+							"    var expected = JSON.parse(pm.globals.get(\"EXPECTED_MOVIES\"));",
+							"    ",
+							"    // Act",
+							"    var actual = pm.response.json();",
+							"    pm.globals.set(\"MOVIES\", JSON.stringify(actual));",
+							"    ",
+							"    // Assert",
+							"    pm.response.to.have.status(200);",
+							"    pm.expect(actual.length).to.eql(expected.length);",
+							"    ",
+							"    _.forEach(actual, function(movie) {",
+							"        pm.expect(expected.indexOf(movie.nume)).to.not.eql(-1);",
+							"    });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzLGFuZHJlaUBnbWFpbC5jb20iLCJpc3MiOiJjb20uaWRwLmNpbmVtYSIsImlhdCI6MTYyMTc5MTA5MiwiYXV0aG9yaXRpZXMiOlsiVVNFUl9BRE1JTiIsIlVTRVJfQ0lORU1BIl0sImV4cCI6MTYyMjM5NTg5Mn0.9GPyzJJ8stGD4m6dc9svqDjukHXGSwYWJr8aak4Y-P6DwIxL-acMOFZgatULa8rsXjTg0A0zVQe8iSNFVGz9tQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"andrei@gmail.com\",\r\n    \"password\": \"andrei123\",\r\n    \"rePassword\": \"andrei123\",\r\n    \"fullName\": \"andrei cune\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/users/andrei@gmail.com",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"users",
+						"andrei@gmail.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GET /movies should return expected data\", function() {",
+							"    // Arramge",
+							"    var expected = JSON.parse(pm.globals.get(\"EXPECTED_MOVIES\"));",
+							"    ",
+							"    // Act",
+							"    var actual = pm.response.json();",
+							"    pm.globals.set(\"MOVIES\", JSON.stringify(actual));",
+							"    ",
+							"    // Assert",
+							"    pm.response.to.have.status(200);",
+							"    pm.expect(actual.length).to.eql(expected.length);",
+							"    ",
+							"    _.forEach(actual, function(movie) {",
+							"        pm.expect(expected.indexOf(movie.nume)).to.not.eql(-1);",
+							"    });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"admin@admin.com\",\r\n    \"password\": \"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/login",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Grant admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GET /movies should return expected data\", function() {",
+							"    // Arramge",
+							"    var expected = JSON.parse(pm.globals.get(\"EXPECTED_MOVIES\"));",
+							"    ",
+							"    // Act",
+							"    var actual = pm.response.json();",
+							"    pm.globals.set(\"MOVIES\", JSON.stringify(actual));",
+							"    ",
+							"    // Assert",
+							"    pm.response.to.have.status(200);",
+							"    pm.expect(actual.length).to.eql(expected.length);",
+							"    ",
+							"    _.forEach(actual, function(movie) {",
+							"        pm.expect(expected.indexOf(movie.nume)).to.not.eql(-1);",
+							"    });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxLGFkbWluQGFkbWluLmNvbSIsImlzcyI6ImNvbS5pZHAuY2luZW1hIiwiaWF0IjoxNjIxNjEwMzI1LCJhdXRob3JpdGllcyI6WyJVU0VSX0FETUlOIl0sImV4cCI6MTYyMjIxNTEyNX0.N9MfYwXdAi2dhhFzNf6XTy_JTvIoDC4zgzy5ZmVBGgcDagXaD5GwPRrw4iE_obGvoZO_Ie4uqAfEKhZVAFnnrg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/grantAdmin/andrei@gmail.com",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"grantAdmin",
+						"andrei@gmail.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deny admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GET /movies should return expected data\", function() {",
+							"    // Arramge",
+							"    var expected = JSON.parse(pm.globals.get(\"EXPECTED_MOVIES\"));",
+							"    ",
+							"    // Act",
+							"    var actual = pm.response.json();",
+							"    pm.globals.set(\"MOVIES\", JSON.stringify(actual));",
+							"    ",
+							"    // Assert",
+							"    pm.response.to.have.status(200);",
+							"    pm.expect(actual.length).to.eql(expected.length);",
+							"    ",
+							"    _.forEach(actual, function(movie) {",
+							"        pm.expect(expected.indexOf(movie.nume)).to.not.eql(-1);",
+							"    });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxLGFkbWluQGFkbWluLmNvbSIsImlzcyI6ImNvbS5pZHAuY2luZW1hIiwiaWF0IjoxNjIxNjEwMzI1LCJhdXRob3JpdGllcyI6WyJVU0VSX0FETUlOIl0sImV4cCI6MTYyMjIxNTEyNX0.N9MfYwXdAi2dhhFzNf6XTy_JTvIoDC4zgzy5ZmVBGgcDagXaD5GwPRrw4iE_obGvoZO_Ie4uqAfEKhZVAFnnrg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/denyAdmin/andrei@gmail.com",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"denyAdmin",
+						"andrei@gmail.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get cinemas",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GET /movies should return expected data\", function() {",
+							"    // Arramge",
+							"    var expected = JSON.parse(pm.globals.get(\"EXPECTED_MOVIES\"));",
+							"    ",
+							"    // Act",
+							"    var actual = pm.response.json();",
+							"    pm.globals.set(\"MOVIES\", JSON.stringify(actual));",
+							"    ",
+							"    // Assert",
+							"    pm.response.to.have.status(200);",
+							"    pm.expect(actual.length).to.eql(expected.length);",
+							"    ",
+							"    _.forEach(actual, function(movie) {",
+							"        pm.expect(expected.indexOf(movie.nume)).to.not.eql(-1);",
+							"    });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/cinemas",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"cinemas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get films for cinema",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GET /movies should return expected data\", function() {",
+							"    // Arramge",
+							"    var expected = JSON.parse(pm.globals.get(\"EXPECTED_MOVIES\"));",
+							"    ",
+							"    // Act",
+							"    var actual = pm.response.json();",
+							"    pm.globals.set(\"MOVIES\", JSON.stringify(actual));",
+							"    ",
+							"    // Assert",
+							"    pm.response.to.have.status(200);",
+							"    pm.expect(actual.length).to.eql(expected.length);",
+							"    ",
+							"    _.forEach(actual, function(movie) {",
+							"        pm.expect(expected.indexOf(movie.nume)).to.not.eql(-1);",
+							"    });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/cinemas/Afi/films",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"cinemas",
+						"Afi",
+						"films"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add cinema",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GET /movies should return expected data\", function() {",
+							"    // Arramge",
+							"    var expected = JSON.parse(pm.globals.get(\"EXPECTED_MOVIES\"));",
+							"    ",
+							"    // Act",
+							"    var actual = pm.response.json();",
+							"    pm.globals.set(\"MOVIES\", JSON.stringify(actual));",
+							"    ",
+							"    // Assert",
+							"    pm.response.to.have.status(200);",
+							"    pm.expect(actual.length).to.eql(expected.length);",
+							"    ",
+							"    _.forEach(actual, function(movie) {",
+							"        pm.expect(expected.indexOf(movie.nume)).to.not.eql(-1);",
+							"    });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyLGFuZHJlaUBnbWFpbC5jb20iLCJpc3MiOiJjb20uaWRwLmNpbmVtYSIsImlhdCI6MTYyMTYxMDQzNiwiYXV0aG9yaXRpZXMiOlsiVVNFUl9BRE1JTiIsIlVTRVJfQ0lORU1BIl0sImV4cCI6MTYyMjIxNTIzNn0.MlSEFR10WbNUeq9OIJ5CbtXvF-vZAXirTC6ee5LAgQRNtj44pepIx_BPVU-b6GgMUyHuThBnqVNboq2UuwaMTQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Afi\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/cinemas",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"cinemas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete cinema",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GET /movies should return expected data\", function() {",
+							"    // Arramge",
+							"    var expected = JSON.parse(pm.globals.get(\"EXPECTED_MOVIES\"));",
+							"    ",
+							"    // Act",
+							"    var actual = pm.response.json();",
+							"    pm.globals.set(\"MOVIES\", JSON.stringify(actual));",
+							"    ",
+							"    // Assert",
+							"    pm.response.to.have.status(200);",
+							"    pm.expect(actual.length).to.eql(expected.length);",
+							"    ",
+							"    _.forEach(actual, function(movie) {",
+							"        pm.expect(expected.indexOf(movie.nume)).to.not.eql(-1);",
+							"    });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyLGFuZHJlaUBnbWFpbC5jb20iLCJpc3MiOiJjb20uaWRwLmNpbmVtYSIsImlhdCI6MTYyMTYxMDQzNiwiYXV0aG9yaXRpZXMiOlsiVVNFUl9BRE1JTiIsIlVTRVJfQ0lORU1BIl0sImV4cCI6MTYyMjIxNTIzNn0.MlSEFR10WbNUeq9OIJ5CbtXvF-vZAXirTC6ee5LAgQRNtj44pepIx_BPVU-b6GgMUyHuThBnqVNboq2UuwaMTQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/cinemas/id",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"cinemas",
+						"id"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add film for cinema",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GET /movies should return expected data\", function() {",
+							"    // Arramge",
+							"    var expected = JSON.parse(pm.globals.get(\"EXPECTED_MOVIES\"));",
+							"    ",
+							"    // Act",
+							"    var actual = pm.response.json();",
+							"    pm.globals.set(\"MOVIES\", JSON.stringify(actual));",
+							"    ",
+							"    // Assert",
+							"    pm.response.to.have.status(200);",
+							"    pm.expect(actual.length).to.eql(expected.length);",
+							"    ",
+							"    _.forEach(actual, function(movie) {",
+							"        pm.expect(expected.indexOf(movie.nume)).to.not.eql(-1);",
+							"    });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyLGFuZHJlaUBnbWFpbC5jb20iLCJpc3MiOiJjb20uaWRwLmNpbmVtYSIsImlhdCI6MTYyMTYxMDQzNiwiYXV0aG9yaXRpZXMiOlsiVVNFUl9BRE1JTiIsIlVTRVJfQ0lORU1BIl0sImV4cCI6MTYyMjIxNTIzNn0.MlSEFR10WbNUeq9OIJ5CbtXvF-vZAXirTC6ee5LAgQRNtj44pepIx_BPVU-b6GgMUyHuThBnqVNboq2UuwaMTQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Avatar\",\r\n    \"length\": \"2h\",\r\n    \"start_time\": \"2020-05-22/19:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/Afi/films",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"Afi",
+						"films"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete film for cinema",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GET /movies should return expected data\", function() {",
+							"    // Arramge",
+							"    var expected = JSON.parse(pm.globals.get(\"EXPECTED_MOVIES\"));",
+							"    ",
+							"    // Act",
+							"    var actual = pm.response.json();",
+							"    pm.globals.set(\"MOVIES\", JSON.stringify(actual));",
+							"    ",
+							"    // Assert",
+							"    pm.response.to.have.status(200);",
+							"    pm.expect(actual.length).to.eql(expected.length);",
+							"    ",
+							"    _.forEach(actual, function(movie) {",
+							"        pm.expect(expected.indexOf(movie.nume)).to.not.eql(-1);",
+							"    });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyLGFuZHJlaUBnbWFpbC5jb20iLCJpc3MiOiJjb20uaWRwLmNpbmVtYSIsImlhdCI6MTYyMTYxMDQzNiwiYXV0aG9yaXRpZXMiOlsiVVNFUl9BRE1JTiIsIlVTRVJfQ0lORU1BIl0sImV4cCI6MTYyMjIxNTIzNn0.MlSEFR10WbNUeq9OIJ5CbtXvF-vZAXirTC6ee5LAgQRNtj44pepIx_BPVU-b6GgMUyHuThBnqVNboq2UuwaMTQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/Afi/films/id",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"Afi",
+						"films",
+						"id"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add reservation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GET /movies should return expected data\", function() {",
+							"    // Arramge",
+							"    var expected = JSON.parse(pm.globals.get(\"EXPECTED_MOVIES\"));",
+							"    ",
+							"    // Act",
+							"    var actual = pm.response.json();",
+							"    pm.globals.set(\"MOVIES\", JSON.stringify(actual));",
+							"    ",
+							"    // Assert",
+							"    pm.response.to.have.status(200);",
+							"    pm.expect(actual.length).to.eql(expected.length);",
+							"    ",
+							"    _.forEach(actual, function(movie) {",
+							"        pm.expect(expected.indexOf(movie.nume)).to.not.eql(-1);",
+							"    });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyLGFuZHJlaUBnbWFpbC5jb20iLCJpc3MiOiJjb20uaWRwLmNpbmVtYSIsImlhdCI6MTYyMTYxMDQzNiwiYXV0aG9yaXRpZXMiOlsiVVNFUl9BRE1JTiIsIlVTRVJfQ0lORU1BIl0sImV4cCI6MTYyMjIxNTIzNn0.MlSEFR10WbNUeq9OIJ5CbtXvF-vZAXirTC6ee5LAgQRNtj44pepIx_BPVU-b6GgMUyHuThBnqVNboq2UuwaMTQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"cinema_name\": \"Afi\",\r\n    \"film_name\": \"Matrix\",\r\n    \"start_time\": \"2020-05-21/19:00\",\r\n    \"reserved_seats\": \"1A;2A;3A;3B\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/reservations",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"reservations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete reservation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GET /movies should return expected data\", function() {",
+							"    // Arramge",
+							"    var expected = JSON.parse(pm.globals.get(\"EXPECTED_MOVIES\"));",
+							"    ",
+							"    // Act",
+							"    var actual = pm.response.json();",
+							"    pm.globals.set(\"MOVIES\", JSON.stringify(actual));",
+							"    ",
+							"    // Assert",
+							"    pm.response.to.have.status(200);",
+							"    pm.expect(actual.length).to.eql(expected.length);",
+							"    ",
+							"    _.forEach(actual, function(movie) {",
+							"        pm.expect(expected.indexOf(movie.nume)).to.not.eql(-1);",
+							"    });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/reservations/id",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"reservations",
+						"id"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get reservations",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GET /movies should return expected data\", function() {",
+							"    // Arramge",
+							"    var expected = JSON.parse(pm.globals.get(\"EXPECTED_MOVIES\"));",
+							"    ",
+							"    // Act",
+							"    var actual = pm.response.json();",
+							"    pm.globals.set(\"MOVIES\", JSON.stringify(actual));",
+							"    ",
+							"    // Assert",
+							"    pm.response.to.have.status(200);",
+							"    pm.expect(actual.length).to.eql(expected.length);",
+							"    ",
+							"    _.forEach(actual, function(movie) {",
+							"        pm.expect(expected.indexOf(movie.nume)).to.not.eql(-1);",
+							"    });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyLGFuZHJlaUBnbWFpbC5jb20iLCJpc3MiOiJjb20uaWRwLmNpbmVtYSIsImlhdCI6MTYyMTYxMDQzNiwiYXV0aG9yaXRpZXMiOlsiVVNFUl9BRE1JTiIsIlVTRVJfQ0lORU1BIl0sImV4cCI6MTYyMjIxNTIzNn0.MlSEFR10WbNUeq9OIJ5CbtXvF-vZAXirTC6ee5LAgQRNtj44pepIx_BPVU-b6GgMUyHuThBnqVNboq2UuwaMTQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/reservations",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"reservations"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
