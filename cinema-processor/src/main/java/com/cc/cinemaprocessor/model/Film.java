@@ -22,6 +22,7 @@ public class Film {
     @Id
     @Column(name = "film_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("film_id")
     private Long id;
 
     @Column(name = "name")

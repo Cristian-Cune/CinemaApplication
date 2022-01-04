@@ -1,6 +1,7 @@
 package com.cc.cinemaprocessor.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,6 +18,7 @@ public class Cinema {
     @Id
     @Column(name = "cinema_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("cinema_id")
     private Long id;
 
     @Column(name = "name")

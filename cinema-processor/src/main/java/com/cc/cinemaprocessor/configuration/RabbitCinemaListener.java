@@ -8,11 +8,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+@Slf4j
 @Configuration
 @EnableRabbit
 public class RabbitCinemaListener {
@@ -32,6 +34,8 @@ public class RabbitCinemaListener {
 
     @RabbitListener(queues = "cinema-queue")
     public void receiveMessage(String message) throws JsonProcessingException {
+        log.info(String.format("Received message on client queue: %s", message));
+
         if (message.contains("reservation_id")) {
             cinemaService.saveReservation(objectMapper().readValue(message, Reservation.class));
         }
@@ -44,6 +48,7 @@ public class RabbitCinemaListener {
 
     @RabbitListener(queues = "cinema-admin-queue")
     public void receiveAdminMessage(String message) throws JsonProcessingException {
+        log.info(String.format("Received message on admin queue: %s", message));
         if (message.contains("cinema_id")) {
             cinemaService.saveCinema(objectMapper().readValue(message, Cinema.class));
         }

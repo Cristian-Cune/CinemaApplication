@@ -21,6 +21,7 @@ public class Reservation {
     @Id
     @Column(name = "reservation_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("reservation_id")
     private Long id;
 
     @JsonProperty("cinema_name")

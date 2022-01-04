@@ -6,6 +6,7 @@ import com.cc.cinemaprocessor.model.Reservation;
 import com.cc.cinemaprocessor.repository.CinemaRepository;
 import com.cc.cinemaprocessor.repository.FilmRepository;
 import com.cc.cinemaprocessor.repository.ReservationRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class CinemaService {
 
@@ -51,6 +53,7 @@ public class CinemaService {
         return cinema.getFilms();
     }
 
+    @Transactional
     public Film saveFilm(Film film, String cinemaName) {
         Cinema cinema = cinemaRepository.findByNameEquals(cinemaName);
         film.setAvailableSeats(AVAILABLE_SEATS);
@@ -73,6 +76,10 @@ public class CinemaService {
         Film film = filmRepository.findByNameAndCinema_NameAndStartTime(reservation.getFilmName(),
                 reservation.getCinemaName(),
                 reservation.getStartTime());
+        if (film == null) {
+            log.error("Required film or date not found");
+            return null;
+        }
         List<String> availableSeats = Arrays.asList(film.getAvailableSeats().split(";"));
         List<String> wantedSeats = Arrays.asList(reservation.getReservedSeats().split(";"));
 

@@ -10,6 +10,7 @@ import com.idp.cinema.model.Film;
 import com.idp.cinema.model.Reservation;
 import com.idp.cinema.service.CinemaService;
 import com.idp.cinema.service.RabbitSender;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 public class CinemaController {
     private final CinemaService cinemaService;
@@ -46,7 +48,7 @@ public class CinemaController {
         if (cinema.getName() == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         try {
-//            Cinema saved = cinemaService.saveCinema(cinema);
+            log.info("Sending create cinema request to queue: " + cinema.toString());
             rabbitSender.sendMessage(cinemaProperties.getExchange(), cinemaProperties.getAdminRoutingKey(), objectMapper.writeValueAsString(cinema));
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
@@ -58,6 +60,7 @@ public class CinemaController {
     @DeleteMapping(value = "/cinemas/{id}")
     public void deleteCinema(@PathVariable Long id) {
 //        cinemaService.deleteCinema(id);
+        log.info("Sending delete cinema request to queue with id: " + id);
         rabbitSender.sendMessage(cinemaProperties.getExchange(), cinemaProperties.getAdminRoutingKey(), "DELETE_CINEMA " + id);
 
     }
@@ -77,7 +80,7 @@ public class CinemaController {
         if (film.getName() == null || film.getStartTime() == null || film.getLength() == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         try {
-//            Film saved = cinemaService.saveFilm(film, cinemaName);
+            log.info(String.format("Sending create film request to queue for cinema %s: %s", cinemaName, film.toString()));
             rabbitSender.sendMessage(cinemaProperties.getExchange(), cinemaProperties.getAdminRoutingKey(), objectMapper.writeValueAsString(new CreateFilmRequest(cinemaName, film)));
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
@@ -88,7 +91,7 @@ public class CinemaController {
     @PreAuthorize("hasAuthority('USER_ADMIN')")
     @DeleteMapping(value = "/cinemas/{cinemaName}/films/{id}")
     public void deleteFIlm(@PathVariable String cinemaName, @PathVariable Long id) {
-//        cinemaService.deleteFilm(id, cinemaName);
+        log.info(String.format("Sending delete film request to queue for cinema %s: %s", cinemaName, id));
         rabbitSender.sendMessage(cinemaProperties.getExchange(), cinemaProperties.getAdminRoutingKey(), String.format("DELETE_FILM %s %s", id, cinemaName));
 
     }
@@ -113,9 +116,9 @@ public class CinemaController {
 
         String username = getUsernameFromToken(jwtToken);
         reservation.setUsername(username);
+        log.info(String.format("Sending create reservation request to queue: %s", reservation));
         rabbitSender.sendMessage(cinemaProperties.getExchange(), cinemaProperties.getRoutingKey(), objectMapper.writeValueAsString(reservation));
 
-//        Reservation saved = cinemaService.saveReservation(reservation);
         return new ResponseEntity<>(HttpStatus.CREATED);
 
     }
@@ -126,7 +129,7 @@ public class CinemaController {
             @PathVariable Long id) {
 
         String username = getUsernameFromToken(jwtToken);
-//        cinemaService.deleteReservation(id, username);
+        log.info(String.format("Sending delete reservation request to queue: %s", id));
         rabbitSender.sendMessage(cinemaProperties.getExchange(), cinemaProperties.getRoutingKey(), String.format("DELETE_RESERVATION %s %s", id, username));
 
     }
