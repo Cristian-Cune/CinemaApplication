@@ -1,0 +1,70 @@
+{
+  "users": [{
+    "name": "rabbit",
+    "password": "rabbit",
+    "tags": ""
+  },
+    {
+      "name": "guest",
+      "password": "guest",
+      "tags": "administrator"
+    }],
+
+  "permissions": [{
+    "user": "rabbit",
+    "vhost": "malima",
+    "configure": ".*",
+    "write": ".*",
+    "read": ".*"
+  }],
+  "vhosts": [{
+    "name": "/"
+  }, {
+    "name": "malima"
+  }],
+  "exchanges": [
+    {
+      "name": "cinema-exchange",
+      "vhost": "malima",
+      "type": "topic",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    },
+  ],
+  "queues": [
+    {
+      "name": "cinema-queue",
+      "vhost": "malima",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {}
+    },
+    {
+      "name": "cinema-admin-queue",
+      "vhost": "malima",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {}
+    }
+  ],
+  "bindings": [
+    {
+      "source": "cinema-exchange",
+      "vhost": "malima",
+      "destination": "cinema-queue",
+      "destination_type": "queue",
+      "routing_key": "cinema-routing-key",
+      "arguments": {}
+    },
+    {
+      "source": "cinema-exchange",
+      "vhost": "malima",
+      "destination": "cinema-admin-queue",
+      "destination_type": "queue",
+      "routing_key": "cinema-admin-routing-key",
+      "arguments": {}
+    }
+  ]
+}
