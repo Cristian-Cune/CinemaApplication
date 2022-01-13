@@ -21,6 +21,9 @@ metadata:
 spec:
   ports:
   - port: 5672
+    name: port1
+  - port: 5674
+    name: port2
   selector:
     app: rabbit-mq
   clusterIP: None
@@ -47,6 +50,7 @@ spec:
         ports:
         - containerPort: 15672
         - containerPort: 5672
+        - containerPort: 5674
         volumeMounts:
         - name: rabbit-persistent-storage
           mountPath: /var/lib/rabbitmq/mnesia/

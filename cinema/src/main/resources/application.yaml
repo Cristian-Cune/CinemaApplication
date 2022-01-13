@@ -6,12 +6,12 @@ cinema:
   admin-routing-key: cinema-admin-routing-key
 spring:
   rabbitmq:
-    addresses: localhost:5674,localhost:5672
+    addresses: rabbit:5674,rabbit:5672
     username: guest
     password: guest
     virtual-host: malima
   datasource:
-    url: jdbc:mysql://localhost:3306/cinema_db?allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mysql://mysql:3306/cinema_db?allowPublicKeyRetrieval=true&useSSL=false
     username: root
     password: root
   jpa:
