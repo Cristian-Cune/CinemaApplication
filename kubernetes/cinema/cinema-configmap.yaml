@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: cinema-config
+data:
+  SPRING_RABBITMQ_ADDRESSES: amqp://rabbit-service:5672
+  SPRING_DATASOURCE_URL: jdbc:mysql://mysql-service:3306/cinema_db?allowPublicKeyRetrieval=true&useSSL=false
+  SPRING_DATASOURCE_DRIVER-CLASS-NAME: com.mysql.cj.jdbc.Driver

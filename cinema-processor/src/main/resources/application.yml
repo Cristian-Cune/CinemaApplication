@@ -2,7 +2,7 @@ server:
   port: 8081
 spring:
   rabbitmq:
-    addresses: rabbit:5674,rabbit:5672
+    addresses: amqp://rabbit:5674,amqp://rabbit:5672
     username: guest
     password: guest
     virtual-host: malima

@@ -30,6 +30,42 @@ spec:
       containers:
         - name: spring-cinema-api
           image: cristiancune/cinema-api:latest # Image that will be used to containers in the cluster
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080 # The port that the container is running on in the cluster
+          env:
+            - name: SPRING_RABBITMQ_ADDRESSES
+              valueFrom:
+                configMapKeyRef:
+                  name: cinema-config
+                  key: SPRING_RABBITMQ_ADDRESSES
+            - name: SPRING_RABBITMQ_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: cinema-secret
+                  key: SPRING_RABBITMQ_USERNAME
+            - name: SPRING_RABBITMQ_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cinema-secret
+                  key: SPRING_RABBITMQ_PASSWORD
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: cinema-config
+                  key: SPRING_DATASOURCE_URL
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: cinema-secret
+                  key: SPRING_DATASOURCE_USERNAME
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cinema-secret
+                  key: SPRING_DATASOURCE_PASSWORD
+            - name: SPRING_DATASOURCE_DRIVER-CLASS-NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: cinema-config
+                  key: SPRING_DATASOURCE_DRIVER-CLASS-NAME
