@@ -12,7 +12,7 @@ spec:
       protocol: TCP
       port: 15672
       targetPort: 15672
-      nodePort: 30011
+      nodePort: 33000
 ---
 apiVersion: v1
 kind: Service

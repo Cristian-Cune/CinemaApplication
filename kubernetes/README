@@ -1,0 +1,21 @@
+README - Cinema Application
+Cune Andrei
+Pauca Dragos-Cristian
+Cune Cristian
+
+Rularea proiectului se face in modul urmator:
+    - Se creeaza secretele pentru baza de date si aplicatii folosind fisierele mysql/mysql-secret.yaml si cinema/cinema-secret.yaml
+    - Se creeaza configMap-ul pentru aplicatii folosind cinema/cinema-configmap.yaml pentru crearea variabilelor de mediu ce vor 
+suprascrie variabilele de configurarea de la nivelul aplicatiilor
+    - Se creeaza volumele pentru mysql si rabbitmq folosind fisierele mysql/mysql-volume.yaml si rabbit/rabbit-volume.yaml pentru creerea
+componentelor PersistentVolume si PersistentVolumeClaim.
+    - Se creeaza deployment-ul cu o singura replica pentru mysql folosind fisierul mysql/mysql-deployment.yaml si deployment-ul cu o 
+singura replica pentru adminer folosind mysql/adminer-deployment
+    - Se creeaza deployment-ul cu o singura replica pentr rabbit mq folosing fisierul rabbit/rabbit-deployment.yaml
+    - Se creeaza deployment-urile pentru api si pentru procesator folosind fisierele cinema/cinema-api-deployment.yaml si
+/cinema/cinema-processor-deployment.yaml
+    - Se creeaza si deployment-ul de Portainer folosind fisierul portainer-deployment.yaml
+
+Toate fisierele de deployment contin definitii si pentru servicii. Portainer, Adminer, Cinema-api si Rabbit MQ au servicii de tip 
+Nodeport pentru a putea fi accesate din exterior. Rabbit expune interfata de admin. Mysql, Rabbit MQ si procesatorul expun servicii
+CLuster Ip pentru a putea comunica cu restul componentelor.

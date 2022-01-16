@@ -1,11 +1,9 @@
 ---
-# Source: portainer/templates/namespace.yaml
 apiVersion: v1
 kind: Namespace
 metadata:
   name: portainer
 ---
-# Source: portainer/templates/serviceaccount.yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -16,7 +14,6 @@ metadata:
     app.kubernetes.io/instance: portainer
     app.kubernetes.io/version: "ce-latest-ee-2.10.0"
 ---
-# Source: portainer/templates/pvc.yaml
 kind: "PersistentVolumeClaim"
 apiVersion: "v1"
 metadata:
@@ -36,7 +33,6 @@ spec:
     requests:
       storage: "10Gi"
 ---
-# Source: portainer/templates/rbac.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
@@ -54,7 +50,6 @@ subjects:
   namespace: portainer
   name: portainer-sa-clusteradmin
 ---
-# Source: portainer/templates/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -87,7 +82,6 @@ spec:
     app.kubernetes.io/name: portainer
     app.kubernetes.io/instance: portainer
 ---
-# Source: portainer/templates/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
